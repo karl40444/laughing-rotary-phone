@@ -44,4 +44,4 @@ npm run build:geo    # regenerate site/data/geo.js from Natural Earth
 | `site/js/history.js` | Approximate Congress of Berlin borders |
 | `site/js/app.js` | Rendering, input, UI and sharing |
 
-The site deploys to GitHub Pages from the default branch through `.github/workflows/pages.yml`.
+Tests run on every pull request, and the site deploys to GitHub Pages from `main` through `.github/workflows/pages.yml`.
