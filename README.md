@@ -4,11 +4,19 @@ A browser game. It's 1878, the Russo-Turkish War is over, and the Congress of Be
 
 ## How to play
 
-1. **Draw** border lines on the ethnographic map. A line cuts the land when it runs coast to coast or meets another line; loose ends within about 60 km snap shut.
-2. **Claim** each piece for a country: make a new country, then tap or drag across pieces. Small islands join the nearest country automatically. Countries name themselves after their largest people until you rename them.
-3. **Sign the Treaty** to see which states go to war, which fall into revolt, and your peace score out of 100, compared with the real Congress of Berlin.
+Built for phones first: the map fills the screen, the tools sit in a bar at the bottom, and it can be added to the home screen and played offline.
 
-Share your result as an image, or as a link that reopens your exact map.
+1. **Draw** border lines with one finger (or the mouse). A line cuts the land when it runs coast to coast or meets another line; loose ends within about 60 km snap shut. A magnifier follows your finger while you draw.
+2. **Claim** the pieces: pick a country from the bar at the bottom, then tap or drag across pieces. **Press and hold** anywhere to see who lives there; use **two fingers** to move and zoom.
+3. **Sign the Treaty** to see which states go to war, which fall into revolt, and your peace score out of 100.
+
+### Daily puzzle
+
+A new small border problem every day, the same for everyone, like Wordle or Tradle: *Serbia or Bulgaria?*, *Transylvania*, *Kosovo*, *Smyrna* and so on (16 puzzles, repeating). Each has a fixed area, two or three named states and a limit of one to three lines. You get three tries. Each try is graded against **par**, the score of a strong reference map: 🟩 at 90% of par, 🟨 at 75%, 🟧 at 50%, otherwise 🟥. Share the emoji result in one tap; played games, wins and streaks are kept on your device.
+
+### Free play
+
+Redraw the whole peninsula with as many countries as you like, compare your score with the real Congress of Berlin, and share the result as an image or as a link that reopens your exact map.
 
 ## How the score works
 
@@ -16,7 +24,7 @@ Share your result as an image, or as a link that reopens your exact map.
 - **Religious and ethnic tension:** hostile groups forced into one state cause unrest, and so do nations with no state of their own.
 - **Holy sites and historic claims:** places such as Peć, Ohrid, Tarnovo, Constantinople and Salonica held by the "wrong" state add tension.
 
-Each tense border and each unstable state becomes a chance of war or revolt within a generation. The score decays as the expected number of conflicts rises, rewards people living in their own nation's state, and penalises unclaimed land and countries too small to survive (under 150,000 people).
+Each tense border and each unstable state becomes a chance of war or revolt within a generation. In a daily puzzle each state stands for its whole nation beyond the puzzle area, so every state counts as a neighbour and is the homeland its people look to. The score decays as the expected number of conflicts rises, rewards people living in their own nation's state, and penalises unclaimed land and countries too small to survive (under 150,000 people).
 
 ## The data
 
@@ -42,6 +50,8 @@ npm run build:geo    # regenerate site/data/geo.js from Natural Earth
 | `site/js/regions.js` | Turns drawn lines into walls and splits the land into pieces |
 | `site/js/score.js` | War, unrest and peace scoring |
 | `site/js/history.js` | Approximate Congress of Berlin borders |
-| `site/js/app.js` | Rendering, input, UI and sharing |
+| `site/js/daily.js` | Daily puzzles, par, grades, streaks and share text |
+| `site/js/app.js` | Rendering, touch and mouse input, UI and sharing |
+| `site/sw.js`, `site/manifest.webmanifest` | Offline support and home-screen install |
 
 Tests run on every pull request, and the site deploys to GitHub Pages from `main` through `.github/workflows/pages.yml`.
