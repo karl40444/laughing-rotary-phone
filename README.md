@@ -64,27 +64,37 @@ A second, separate game in `site/partition/` (served at `/partition/`). Each day
 
 After you submit, the game shows your score as a number of people and as a percentage. It compares that with no border at all, the best border its search found, and the **floor**: what would remain even if every square became its own country. The best score is never zero, and that is the point: people are too mixed for a line to separate them.
 
-This is the first playable loop, with one hardcoded map: a simplified Bosnia and Herzegovina, 220 squares of about 16 km.
+There are six maps, one per day in rotation, repeating:
+
+| # | Map | Data | Territories | No border | Best border | Floor |
+| --- | --- | --- | --- | --- | --- | --- |
+| 1 | Bosnia and Herzegovina | 1991 census, by municipality | 3 | 52.9% | 41.4% | 38.4% |
+| 2 | Punjab | 1941 census, by district | 2 | 45.2% | 35.4% | 35.0% |
+| 3 | Northern Ireland | 2011 census community background, by district | 2 | 46.3% | 34.4% | 34.3% |
+| 4 | Belgium | language, rough estimates by arrondissement | 3 | 42.8% | 7.5% | 7.5% |
+| 5 | North Macedonia | 2002 census, by municipality | 2 | 32.9% | 21.2% | 20.8% |
+| 6 | Mandatory Palestine | 1945 Village Statistics, by subdistrict | 2 | 33.1% | 22.1% | 21.6% |
+
+Belgium is the deliberate contrast: there, a line nearly works.
 
 - **Drawing:** drag along grid lines to draw; drag back over a line or tap it to erase. Lines count once they close off a territory; loose ends show dashed. Tap inside a square to see who lives there.
-- **Score:** misplaced people and share of the population. **Efficiency** is how much of the avoidable misplacement you removed, from 0% (no better than no border) to 100% (as good as the best border).
-- **Daily:** puzzle #1 is 26 September 2026. The first result each day counts towards streaks and personal best (best efficiency), kept in `localStorage`. After that, "Practise again" replays without counting. Only one map exists so far, so every day uses it.
+- **Score:** misplaced people and share of the population. **Efficiency** is how much of the avoidable misplacement you removed, from 0% (no better than no border) to 100% (as good as the best border). It is comparable across maps, so it drives the personal best.
+- **Daily:** puzzle #1 is 26 September 2026, and `site/partition/js/regions.js` sets the rotation (append new maps at the end so past puzzles keep theirs). The first result each day counts towards streaks and personal best, kept in `localStorage`. After that, "Practise again" replays without counting, and `?puzzle=N` opens any day's map for practice.
 - **Share card:** efficiency bar, one purity square per territory (🟩 ≥80% majority, 🟨 ≥65%, 🟧 ≥55%, 🟥 below) and the percentages. It never shows the border.
 
 ### Data and the best border
 
-`tools/build-partition-bosnia.mjs` builds `site/partition/data/bosnia.json`. It spreads roughly 100 municipalities, with approximate 1991 census figures (Bosniaks, Serbs and Croats only; Yugoslavs and others left out), over the grid with a 6 km Gaussian kernel. It then runs `tools/partition-solve.mjs`, a simulated-annealing search over contiguous three-territory splits with 40 restarts, and stores the best result. That result is the best found, not a proven optimum; a test checks that a quick independent search never beats it. Rebuild with `npm run build:partition` (about 10 s).
+`tools/build-partition.mjs` builds `site/partition/data/<id>.json` from the definitions in `tools/partition-regions/`. Each region lists anchors (municipalities, districts or towns) with a population and each group's share, and they are spread over a square grid with a Gaussian kernel. Outlines come from Natural Earth (via `world-atlas`), apart from Bosnia and 1941 Punjab, which are traced by hand. Only the largest groups are counted on each map.
 
-| | Wrong side |
-| --- | --- |
-| No border | 52.9% |
-| Best 2-territory border | 45.0% |
-| Best 3-territory border | 41.4% |
-| Floor (every square its own country) | 38.4% |
+**The figures were entered from memory of the published results and are approximate. They should be checked against the sources before the game is promoted.** Belgium has had no language census since 1947, so its figures are rough estimates.
+
+The builder then runs `tools/partition-solve.mjs`, a simulated-annealing search over contiguous splits with 40 restarts, and stores the best result. That result is the best found, not a proven optimum; a test checks that a quick independent search never beats it. Rebuild everything with `npm run build:partition` (about a minute), or one map with `node tools/build-partition.mjs <id>`.
 
 | Path | What it does |
 | --- | --- |
 | `site/partition/js/engine.js` | Grid, edges, territories and scoring (pure; shared with Node) |
 | `site/partition/js/daily.js` | Puzzle number, efficiency, streaks, share text |
+| `site/partition/js/regions.js` | The daily rotation of maps |
 | `site/partition/js/app.js` | SVG rendering, pointer drawing, results UI |
-| `test/partition.test.mjs` | Engine, data, stored optimum and daily tests |
+| `tools/partition-regions/*.mjs` | One file per map: outline, groups and anchors |
+| `test/partition.test.mjs` | Engine, per-map data, stored optima and daily tests |

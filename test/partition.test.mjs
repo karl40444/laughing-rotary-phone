@@ -8,6 +8,7 @@ import {
 import {
   puzzleNumber, efficiency, shareText, emptyStats, recordResult, currentStreak,
 } from '../site/partition/js/daily.js';
+import { ROTATION, regionFor } from '../site/partition/js/regions.js';
 import { solve } from '../tools/partition-solve.mjs';
 
 // A 3 x 2 toy map: a Serb-ish left column, a Croat-ish right column and a
@@ -57,40 +58,62 @@ test('the solver finds the toy optimum', () => {
   assert.deepEqual(decodeAssignment(toy, encodeAssignment(toy, best.of)), best.of);
 });
 
-const bosnia = prepareMap(JSON.parse(readFileSync(new URL('../site/partition/data/bosnia.json', import.meta.url))));
+const load = (id) => prepareMap(JSON.parse(readFileSync(new URL(`../site/partition/data/${id}.json`, import.meta.url))));
+const maps = Object.fromEntries(ROTATION.map((id) => [id, load(id)]));
 
-test('the Bosnia map is plausible', () => {
-  assert.ok(bosnia.cells.length > 150 && bosnia.cells.length < 400, `${bosnia.cells.length} cells`);
-  assert.ok(bosnia.total > 3.5e6 && bosnia.total < 4.5e6, `total ${bosnia.total}`);
-  const majorAt = (name) => {
-    const p = bosnia.places.find((q) => q.name === name);
-    return bosnia.groups[bosnia.cells[bosnia.at(p.r, p.c)].major].name;
-  };
-  assert.equal(majorAt('Sarajevo'), 'Bosniaks');
-  assert.equal(majorAt('Banja Luka'), 'Serbs');
-  assert.equal(majorAt('Trebinje'), 'Serbs');
-  assert.equal(majorAt('Livno'), 'Croats');
-  assert.equal(majorAt('Tuzla'), 'Bosniaks');
+// Places whose local majority is not in doubt, as a check on each dataset.
+const EXPECTED = {
+  bosnia: { Sarajevo: 'Bosniaks', 'Banja Luka': 'Serbs', Trebinje: 'Serbs', Livno: 'Croats', Tuzla: 'Bosniaks' },
+  punjab: { Rawalpindi: 'Muslims', Multan: 'Muslims', Lahore: 'Muslims', Ludhiana: 'Sikhs', Hissar: 'Hindus', Gurgaon: 'Hindus' },
+  'northern-ireland': { Derry: 'Catholic', Newry: 'Catholic', Bangor: 'Protestant', Ballymena: 'Protestant' },
+  belgium: { Antwerp: 'Dutch', Ghent: 'Dutch', Brussels: 'French', Liège: 'French', Eupen: 'German' },
+  'north-macedonia': { Tetovo: 'Albanians', Bitola: 'Macedonians', Štip: 'Macedonians', Debar: 'Albanians' },
+  palestine: { 'Tel Aviv': 'Jews', Nablus: 'Arabs', Hebron: 'Arabs', Gaza: 'Arabs' },
+};
+
+test('the rotation starts with Bosnia and repeats', () => {
+  assert.equal(regionFor(1), 'bosnia');
+  assert.equal(regionFor(2), 'punjab');
+  assert.equal(regionFor(ROTATION.length + 1), 'bosnia');
+  assert.equal(new Set(ROTATION).size, ROTATION.length);
 });
 
-test('the stored optimum is valid, honest and never zero', () => {
-  const of = decodeAssignment(bosnia, bosnia.optimum.assignment);
-  // Contiguous: the territories cut out by its border are exactly its labels.
-  const cut = territories(bosnia, bordersOf(bosnia, of));
-  assert.ok(cut.count >= 2 && cut.count <= bosnia.maxTerritories);
-  assert.deepEqual([...cut.of], [...of]);
-  const s = score(bosnia, of, cut.count);
-  assert.equal(s.misplaced, bosnia.optimum.misplaced);
-  const floor = floorScore(bosnia);
-  const none = score(bosnia, new Int32Array(bosnia.cells.length), 1).misplaced;
-  assert.ok(floor < s.misplaced && s.misplaced < none);
-  assert.ok(s.share > 0.2, 'a clean partition should be impossible');
-});
+for (const [id, map] of Object.entries(maps)) {
+  test(`${id}: the map is well formed and plausible`, () => {
+    assert.equal(map.id, id);
+    assert.ok(map.cells.length > 150 && map.cells.length < 400, `${map.cells.length} squares`);
+    assert.ok(map.maxTerritories >= 2 && map.maxTerritories <= 3);
+    assert.ok(map.name && map.subtitle && map.brief && map.note && map.cellKm > 0);
+    assert.ok(map.cells.every((c) => c.total > 0 && c.pops.length === map.groups.length));
+    // One connected landmass, so every square can join a territory.
+    assert.equal(territories(map, new Set()).count, 1);
+    const majorAt = (name) => {
+      const p = map.places.find((q) => q.name === name);
+      assert.ok(p, `${name} is labelled`);
+      return map.groups[map.cells[map.at(p.r, p.c)].major].name;
+    };
+    for (const [place, group] of Object.entries(EXPECTED[id])) assert.equal(majorAt(place), group, place);
+  });
 
-test('a quick search never beats the stored optimum', () => {
-  const quick = solve(bosnia, bosnia.maxTerritories, { restarts: 2, steps: 60000, seed: 7 });
-  assert.ok(quick.misplaced >= bosnia.optimum.misplaced);
-});
+  test(`${id}: the stored optimum is valid, honest and never zero`, () => {
+    const of = decodeAssignment(map, map.optimum.assignment);
+    // Contiguous: the territories cut out by its border are exactly its labels.
+    const cut = territories(map, bordersOf(map, of));
+    assert.ok(cut.count >= 2 && cut.count <= map.maxTerritories);
+    assert.deepEqual([...cut.of], [...of]);
+    const s = score(map, of, cut.count);
+    assert.equal(s.misplaced, map.optimum.misplaced);
+    const floor = floorScore(map);
+    const none = score(map, new Int32Array(map.cells.length), 1).misplaced;
+    assert.ok(floor <= s.misplaced && s.misplaced < none);
+    assert.ok(s.share > 0.03, 'a perfectly clean partition should be impossible');
+  });
+
+  test(`${id}: a quick search never beats the stored optimum`, () => {
+    const quick = solve(map, map.maxTerritories, { restarts: 2, steps: 60000, seed: 7 });
+    assert.ok(quick.misplaced >= map.optimum.misplaced);
+  });
+}
 
 test('puzzle numbers start on 26 September 2026 and advance daily', () => {
   assert.equal(puzzleNumber(new Date(2026, 8, 26, 0, 1)), 1);
