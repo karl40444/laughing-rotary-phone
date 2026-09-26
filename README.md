@@ -55,3 +55,36 @@ npm run build:geo    # regenerate site/data/geo.js from Natural Earth
 | `site/sw.js`, `site/manifest.webmanifest` | Offline support and home-screen install |
 
 Tests run on every pull request, and the site deploys to GitHub Pages from `main` through `.github/workflows/pages.yml`.
+
+---
+
+# Partition (working title)
+
+A second, separate game in `site/partition/` (served at `/partition/`). Each day you get a map of a mixed region, coloured by local majority. Draw a border that splits it into two or three territories. In each territory the largest group is the majority, and everyone else is **on the wrong side**. Lower is better.
+
+After you submit, the game shows your score as a number of people and as a percentage. It compares that with no border at all, the best border its search found, and the **floor**: what would remain even if every square became its own country. The best score is never zero, and that is the point: people are too mixed for a line to separate them.
+
+This is the first playable loop, with one hardcoded map: a simplified Bosnia and Herzegovina, 220 squares of about 16 km.
+
+- **Drawing:** drag along grid lines to draw; drag back over a line or tap it to erase. Lines count once they close off a territory; loose ends show dashed. Tap inside a square to see who lives there.
+- **Score:** misplaced people and share of the population. **Efficiency** is how much of the avoidable misplacement you removed, from 0% (no better than no border) to 100% (as good as the best border).
+- **Daily:** puzzle #1 is 26 September 2026. The first result each day counts towards streaks and personal best (best efficiency), kept in `localStorage`. After that, "Practise again" replays without counting. Only one map exists so far, so every day uses it.
+- **Share card:** efficiency bar, one purity square per territory (🟩 ≥80% majority, 🟨 ≥65%, 🟧 ≥55%, 🟥 below) and the percentages. It never shows the border.
+
+### Data and the best border
+
+`tools/build-partition-bosnia.mjs` builds `site/partition/data/bosnia.json`. It spreads roughly 100 municipalities, with approximate 1991 census figures (Bosniaks, Serbs and Croats only; Yugoslavs and others left out), over the grid with a 6 km Gaussian kernel. It then runs `tools/partition-solve.mjs`, a simulated-annealing search over contiguous three-territory splits with 40 restarts, and stores the best result. That result is the best found, not a proven optimum; a test checks that a quick independent search never beats it. Rebuild with `npm run build:partition` (about 10 s).
+
+| | Wrong side |
+| --- | --- |
+| No border | 52.9% |
+| Best 2-territory border | 45.0% |
+| Best 3-territory border | 41.4% |
+| Floor (every square its own country) | 38.4% |
+
+| Path | What it does |
+| --- | --- |
+| `site/partition/js/engine.js` | Grid, edges, territories and scoring (pure; shared with Node) |
+| `site/partition/js/daily.js` | Puzzle number, efficiency, streaks, share text |
+| `site/partition/js/app.js` | SVG rendering, pointer drawing, results UI |
+| `test/partition.test.mjs` | Engine, data, stored optimum and daily tests |
