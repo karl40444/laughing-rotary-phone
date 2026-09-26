@@ -62,28 +62,35 @@ export function unrestLabel(u) {
   return 'Stable';
 }
 
-// Fallback land-cell finder for sites that fall just offshore.
-function siteOwner(site, owner, model) {
-  if (model.land[site.cell]) return owner[site.cell];
+// Fallback land-cell finder for sites that fall just offshore. Returns
+// undefined when the site is outside the scored area.
+function siteOwner(site, owner, land, N) {
+  if (land[site.cell]) return owner[site.cell];
   for (let r = 1; r <= 3; r++)
     for (let dy = -r; dy <= r; dy++)
       for (let dx = -r; dx <= r; dx++) {
         const i = site.cell + dy * COLS + dx;
-        if (i >= 0 && i < model.N && model.land[i]) return owner[i];
+        if (i >= 0 && i < N && land[i]) return owner[i];
       }
-  return -1;
+  return undefined;
 }
 
 /**
  * @param model   from buildModel()
  * @param owner   Int16Array/Int32Array per cell: country index or -1
  * @param countries array of { name } (index = country id)
+ * @param options.mask optional Uint8Array: score only these cells (daily puzzles)
+ * @param options.allNeighbours treat every pair of states as neighbours (in a
+ *   puzzle they all border each other just outside the area)
+ * A country may carry `nation`: that nation is then its only titular nation,
+ * and the country is always its homeland, even with no land in the area.
  */
-export function evaluate(model, owner, countries) {
+export function evaluate(model, owner, countries, { mask = null, allNeighbours = false } = {}) {
   const C = countries.length;
   const U = C; // bucket for unclaimed land
   const byGroup = Array.from({ length: C + 1 }, () => new Float64Array(G));
-  const { N, land, pop, comp } = model;
+  const { N, pop, comp } = model;
+  const land = mask ? model.land.map((v, i) => v & mask[i]) : model.land;
 
   for (let i = 0; i < N; i++) {
     if (!land[i]) continue;
@@ -110,7 +117,9 @@ export function evaluate(model, owner, countries) {
   // Titular nations: the largest nation, plus any other with ≥ 33%.
   const titular = byGroup.map((row, c) => {
     const set = new Set();
-    if (c === U || totals[c] <= 0) return set;
+    if (c === U) return set;
+    if (countries[c].nation) return set.add(NATIONS.indexOf(countries[c].nation));
+    if (totals[c] <= 0) return set;
     const byNation = new Float64Array(NN);
     for (let g = 0; g < G; g++) byNation[NATION_OF[g]] += row[g];
     let best = 0;
@@ -126,7 +135,12 @@ export function evaluate(model, owner, countries) {
     if (titular[c].has(NATION_OF[g])) return 1;
     let best = DIASPORA[g] ? 0.6 : 0;
     const row = byGroup[c];
-    for (let t = 0; t < G; t++) if (row[t] > 0 && titular[c].has(NATION_OF[t])) best = Math.max(best, KIN[g][t] * Math.min(1, (row[t] / totals[c]) * 1.5));
+    // A named puzzle state has its whole nation behind it, even outside the area.
+    const named = !!countries[c].nation;
+    for (let t = 0; t < G; t++) {
+      if (!titular[c].has(NATION_OF[t]) || (!named && row[t] <= 0)) continue;
+      best = Math.max(best, KIN[g][t] * (named ? 1 : Math.min(1, (row[t] / totals[c]) * 1.5)));
+    }
     return best;
   };
 
@@ -140,6 +154,7 @@ export function evaluate(model, owner, countries) {
       if (p > inHome[n]) { inHome[n] = p; homeland[n] = c; }
     }
   }
+  countries.forEach((co, c) => { if (co.nation) homeland[NATIONS.indexOf(co.nation)] = c; });
 
   // Grievances between countries.
   const griev = Array.from({ length: C }, () => new Float64Array(C));
@@ -166,8 +181,8 @@ export function evaluate(model, owner, countries) {
 
   // Holy sites and historic claims.
   const statelessClaims = new Float64Array(C + 1);
-  const sites = SITE_CELLS.map((s) => {
-    const c = siteOwner(s, owner, model);
+  const sites = SITE_CELLS.filter((s) => siteOwner(s, owner, land, N) !== undefined).map((s) => {
+    const c = siteOwner(s, owner, land, N);
     const cc = c >= 0 ? c : U;
     const aggrieved = [];
     for (const [key, w] of Object.entries(s.claims)) {
@@ -192,10 +207,10 @@ export function evaluate(model, owner, countries) {
     for (let b = a + 1; b < C; b++) {
       const raw = griev[a][b] + griev[b][a];
       if (raw <= 0) continue;
-      const t = raw * (adjacent[a][b] ? 1 : DISTANT_FACTOR);
+      const t = raw * (adjacent[a][b] || allNeighbours ? 1 : DISTANT_FACTOR);
       const why = [...reasons[a][b].map((r) => ({ ...r, claimant: a })), ...reasons[b][a].map((r) => ({ ...r, claimant: b }))]
         .sort((x, y) => y.pts - x.pts);
-      wars.push({ a, b, tension: t, label: riskLabel(t), adjacent: !!adjacent[a][b], why });
+      wars.push({ a, b, tension: t, label: riskLabel(t), adjacent: !!adjacent[a][b] || allNeighbours, why });
     }
   }
   wars.sort((x, y) => y.tension - x.tension);
