@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Balkans 1878: Draw the Borders</title>
+  <meta name="description" content="It's 1878. Draw the fairest borders you can across the Balkans and try to prevent war.">
+  <meta name="theme-color" content="#efe4c8">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23efe4c8'/%3E%3Cpath d='M6 24 C10 14 14 20 17 10 S24 12 26 6' stroke='%238b1e1e' stroke-width='3' fill='none' stroke-linecap='round'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,500;0,700;1,500&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="year">1878</span>
+      <div>
+        <h1>Draw the Borders</h1>
+        <p class="tag">Carve up the Balkans fairly, and keep the peace.</p>
+      </div>
+    </div>
+    <nav class="topnav">
+      <button class="link" data-open="intro">How to play</button>
+      <button class="link" data-open="about">About the data</button>
+    </nav>
+  </header>
+
+  <main class="layout">
+    <section class="mapwrap" aria-label="Map">
+      <div class="toolbar" role="toolbar" aria-label="Tools">
+        <div class="seg" role="radiogroup" aria-label="Tool">
+          <button class="tool" data-tool="draw" aria-pressed="true" title="Draw border (D)">
+            <svg viewBox="0 0 24 24"><path d="M3 21l3.8-1 11-11-2.8-2.8-11 11L3 21zM15.8 4.4l2.8 2.8 1.6-1.6a1 1 0 000-1.4l-1.4-1.4a1 1 0 00-1.4 0l-1.6 1.6z"/></svg><span>Draw</span></button>
+          <button class="tool" data-tool="erase" aria-pressed="false" title="Erase a line (E)">
+            <svg viewBox="0 0 24 24"><path d="M16.2 3.6l4.2 4.2a1.5 1.5 0 010 2.1L11 19.3H20v1.9H7.7l-4.1-4.1a1.5 1.5 0 010-2.1l10.5-10.5a1.5 1.5 0 012.1 0zM9.3 10.6l-4.2 4.3 3.4 3.4h1.5l3.6-3.6-4.3-4.1z"/></svg><span>Erase</span></button>
+          <button class="tool" data-tool="claim" aria-pressed="false" title="Claim regions for a country (C)">
+            <svg viewBox="0 0 24 24"><path d="M5 21V3h2v1.2C8.3 3.6 9.6 3.3 11 3.6c2 .4 3.2 1.6 5.2 1.6 1.1 0 2.1-.3 2.8-.7v9.3c-.8.5-1.8.8-2.8.8-2 0-3.2-1.2-5.2-1.6-1.4-.3-2.7 0-4 .6V21H5z"/></svg><span>Claim</span></button>
+          <button class="tool" data-tool="pan" aria-pressed="false" title="Move the map (M, or hold Space)">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3 3h-2v5h5V8l3 3-3 3v-2h-5v5h2l-3 3-3-3h2v-5H6v2l-3-3 3-3v2h5V5H9l3-3z"/></svg><span>Move</span></button>
+        </div>
+        <div class="seg">
+          <button id="undo" title="Undo (Ctrl+Z)" aria-label="Undo"><svg viewBox="0 0 24 24"><path d="M12.5 8c-2.6 0-5 1-6.9 2.6L2 7v9h9l-3.6-3.6c1.4-1.2 3.2-1.9 5.1-1.9 3.5 0 6.5 2.3 7.6 5.5l2.4-.8C21 11.9 17.1 8 12.5 8z"/></svg></button>
+          <button id="redo" title="Redo (Ctrl+Shift+Z)" aria-label="Redo"><svg viewBox="0 0 24 24"><path d="M11.5 8c2.6 0 5 1 6.9 2.6L22 7v9h-9l3.6-3.6c-1.4-1.2-3.2-1.9-5.1-1.9-3.5 0-6.5 2.3-7.6 5.5L1.5 15.2C3 11.9 6.9 8 11.5 8z"/></svg></button>
+          <button id="clear" title="Start again" aria-label="Start again"><svg viewBox="0 0 24 24"><path d="M6 7h12l-1 14H7L6 7zm3-4h6l1 2h4v2H4V5h4l1-2z"/></svg></button>
+        </div>
+        <div class="seg" role="radiogroup" aria-label="Map view">
+          <button class="view" data-view="ethnic" aria-pressed="true" title="Ethnic map">Peoples</button>
+          <button class="view" data-view="political" aria-pressed="false" title="Your countries">Countries</button>
+        </div>
+      </div>
+
+      <div class="mapbox" id="mapbox">
+        <canvas id="map" aria-label="Ethnographic map of the Balkans, 1878"></canvas>
+        <div class="hint" id="hint"></div>
+        <div class="tip" id="tip" hidden></div>
+        <div class="zoom">
+          <button id="zin" aria-label="Zoom in">+</button>
+          <button id="zout" aria-label="Zoom out">−</button>
+          <button id="zfit" aria-label="Fit map" title="Fit map"><svg viewBox="0 0 24 24"><path d="M4 9V4h5v2H6v3H4zm11-5h5v5h-2V6h-3V4zM4 15h2v3h3v2H4v-5zm14 3v-3h2v5h-5v-2h3z"/></svg></button>
+        </div>
+        <div class="overlays">
+          <label><input type="checkbox" id="show1878"> 1878 borders</label>
+          <label><input type="checkbox" id="showModern"> Modern borders</label>
+          <label><input type="checkbox" id="showSites" checked> Holy sites</label>
+          <label><input type="checkbox" id="simplify"> Majority only</label>
+        </div>
+      </div>
+    </section>
+
+    <aside class="side">
+      <section class="card countries">
+        <div class="card-h">
+          <h2>Your countries</h2>
+          <button id="newCountry" class="btn small">+ New country</button>
+        </div>
+        <p class="muted small" id="countriesHelp">Draw lines to cut the map into pieces, then pick a country and tap the pieces to claim them.</p>
+        <ul id="countryList" class="clist"></ul>
+        <div class="unclaimed" id="unclaimed"></div>
+        <button id="sign" class="btn primary block">Sign the Treaty</button>
+      </section>
+
+      <section class="card">
+        <div class="card-h"><h2>Peoples</h2><span class="muted small">Tap to highlight</span></div>
+        <ul id="legend" class="legend"></ul>
+      </section>
+    </aside>
+  </main>
+
+  <dialog id="intro" class="dlg">
+    <form method="dialog">
+      <p class="eyebrow">Berlin, summer 1878</p>
+      <h2>The Congress is yours</h2>
+      <p>The Russo-Turkish War is over and the Ottoman Empire's hold on Europe is broken. The Great Powers have handed you the pen. <strong>Draw the fairest borders you can and prevent the wars to come.</strong></p>
+      <ol class="steps">
+        <li><b>Draw</b> border lines across the map. A line cuts the land when it runs coast to coast or meets another line; loose ends within about 60 km snap shut.</li>
+        <li><b>Claim</b> each piece for a country. Make a new country, then tap or drag across pieces to give them to it.</li>
+        <li><b>Sign the Treaty</b> to see who goes to war, who revolts, and your peace score. Then compare it with the real 1878 settlement.</li>
+      </ol>
+      <p class="muted small">Wars come from peoples left under a foreign flag, rival groups forced into one state, and holy sites or historic capitals in the wrong hands. Countries under 150,000 people will be swallowed by their neighbours.</p>
+      <div class="dlg-actions"><button class="btn primary" value="ok">Take up the pen</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="about" class="dlg">
+    <form method="dialog">
+      <h2>About the data</h2>
+      <p>The ethnic map is an original, simplified reconstruction made for this game. About 330 regional anchor points give a density and an ethnic mix; the map is interpolated between them, and cities are added on top. It is <em>not</em> a scholarly dataset.</p>
+      <p>The mixes draw on censuses and period maps: the Austro-Hungarian census of Bosnia (1879), the Hungarian census (1880), the Eastern Rumelian census (1880), Romanian figures for Dobruja (1878–80), the Ottoman census of 1881/82–93, Ottoman figures for Thessaly (1877/8), and the ethnographic maps of Kiepert, Synvet and Stanford.</p>
+      <p><strong>Period sources disagree</strong>, above all about Macedonia, Thrace, Epirus and Kosovo. Each nationality's cartographers drew maps favouring their own claims. Where they conflict, this game takes a middle reading. "Macedonian Slavs" is a neutral label: in 1878 most were counted as Bulgarians, while Serbian and Greek writers claimed many of them. In the game they feel most at home in a Macedonian or Bulgarian state.</p>
+      <p>Coastlines: Natural Earth (public domain). The 1878 borders are traced by hand and approximate.</p>
+      <h3>Sources</h3>
+      <ul id="sources" class="sources"></ul>
+      <div class="dlg-actions"><button class="btn" value="ok">Close</button></div>
+    </form>
+  </dialog>
+
+  <dialog id="results" class="dlg wide">
+    <form method="dialog">
+      <div id="resultsBody"></div>
+      <div class="dlg-actions">
+        <button class="btn" type="button" id="shareImg">Share image</button>
+        <button class="btn" type="button" id="copyLink">Copy link</button>
+        <button class="btn primary" value="ok">Keep drawing</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
