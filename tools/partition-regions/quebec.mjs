@@ -8,7 +8,8 @@ export default {
   name: 'Quebec and eastern Ontario',
   subtitle: '2021 census, mother tongue',
   brief: 'Quebec nearly voted to leave Canada in 1995. English-speaking communities in Quebec argued they could then leave Quebec, and French speakers in Ontario were on the other side of the line.',
-  note: 'Approximate 2021 census mother-tongue figures by city and region, for French and English only; people with other mother tongues, about a third of Montreal island, are left out. Only southern Quebec and eastern Ontario are shown.',
+  source: 'Approximate 2021 census mother-tongue figures by city and region, for French and English only; people with other mother tongues, about a third of Montreal island, are left out. Only southern Quebec and eastern Ontario are shown.',
+  history: 'Quebec voted to stay in Canada by 50.6% to 49.4%, so the partition question was never tested.',
   maxTerritories: 2,
   groups: [
     { key: 'fr', name: 'French', color: '#2a9d8f' },

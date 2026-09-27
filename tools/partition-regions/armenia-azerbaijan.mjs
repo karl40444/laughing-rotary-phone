@@ -8,7 +8,8 @@ export default {
   name: 'Armenia and Azerbaijan',
   subtitle: '1979 census',
   brief: 'Soviet Armenia and Azerbaijan in 1979. Nagorno-Karabakh, mostly Armenian, lay inside Azerbaijan; Azerbaijanis lived across Armenia, and Baku had a large Armenian community.',
-  note: 'Approximate 1979 census figures by city and district, counting only Armenians and Azerbaijanis. Between 1988 and 1994 more than a million people fled or were driven out across these lines, and in 2023 almost all of Nagorno-Karabakh\'s Armenians, over 100,000 people, fled to Armenia.',
+  source: 'Approximate 1979 census figures by city and district, counting only Armenians and Azerbaijanis.',
+  history: 'Between 1988 and 1994 more than a million people fled or were driven out across these lines. In 2023 almost all of Nagorno-Karabakh\'s Armenians, over 100,000 people, fled to Armenia.',
   maxTerritories: 2,
   groups: [
     { key: 'hy', name: 'Armenians', color: '#e76f51' },

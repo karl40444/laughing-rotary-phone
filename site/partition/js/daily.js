@@ -33,7 +33,7 @@ export function shareText({ number, mapName, share, bestShare, eff, territories,
   const filled = Math.round(eff * 10);
   return [
     `Partition #${number}${practice ? ' (practice)' : ''} · ${mapName}`,
-    `${'🟦'.repeat(filled)}${'⬜'.repeat(10 - filled)} ${Math.round(eff * 100)}%`,
+    `${'🟦'.repeat(filled)}${'⬜'.repeat(10 - filled)} ${Math.round(eff * 100)}% of the way to the best line`,
     `${territories.map((t) => puritySquare(1 - t.misplaced / t.total)).join('')} ${pct(share)} on the wrong side`,
     `Best possible: ${pct(bestShare)} · ⏱ ${clock(ms)}`,
   ].join('\n');

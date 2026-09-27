@@ -7,7 +7,8 @@ export default {
   name: 'North Macedonia',
   subtitle: '2002 census',
   brief: 'Macedonians, Albanians and Turks. After the 2001 conflict, the Ohrid Agreement chose power-sharing over any new border.',
-  note: 'Approximate 2002 census figures by municipality; Roma, Serbs and others are left out. Albanians are concentrated in the west and north-west, but Skopje, Kumanovo and Struga are mixed.',
+  source: 'Approximate 2002 census figures by municipality; Roma, Serbs and others are left out.',
+  history: 'After a brief armed conflict in 2001, the Ohrid Agreement gave Albanians more rights and local power instead of a border. Skopje, Kumanovo and Struga are still mixed.',
   maxTerritories: 2,
   groups: [
     { key: 'mk', name: 'Macedonians', color: '#e76f51' },

@@ -1,6 +1,7 @@
 // Partition: rendering, border drawing and the daily round.
 import {
   prepareMap, territories, score, floorScore, activeEdges, bordersOf, decodeAssignment, edgeBetween, edgeEnds, hKey, vKey,
+  peopleDots,
 } from './engine.js';
 import { regionFor } from './regions.js';
 import {
@@ -101,7 +102,7 @@ const NUMBER = ['', 'one', 'two', 'three', 'four', 'five', 'six'];
 const parts = map.maxTerritories === 2 ? 'two territories'
   : map.maxTerritories === 3 ? 'two or three territories' : `two to ${NUMBER[map.maxTerritories]} territories`;
 $('brief').innerHTML = `<strong>${map.name}</strong>, ${map.subtitle}. ${map.brief} Split it into ${parts} and leave as few people as possible on the wrong side.`;
-$('note').textContent = map.note;
+$('note').textContent = map.source;
 document.title = `Partition #${number}: ${map.name}`;
 $('legend').innerHTML = map.groups.map((g) => `<li><i style="background:${g.color}"></i>${g.name}</li>`).join('')
   + '<li class="mixed">pale = mixed · dot = population</li>';
@@ -123,7 +124,8 @@ function renderBorder() {
   if (result) {
     // Hatch the squares whose local majority ended up as a minority.
     const s = score(map, of, count);
-    renderTable(s);
+    renderTerritories(s);
+    renderWaffle(s, shown === bestEdges);
     map.cells.forEach((cell, i) => {
       if (cell.major !== s.territories[of[i]].major) el('rect', { x: cell.c, y: cell.r, width: 1, height: 1, fill: 'url(#hatch)' }, gHatch);
     });
@@ -131,12 +133,20 @@ function renderBorder() {
   return { of, count };
 }
 
-function renderTable(s) {
-  $('resTable').innerHTML = '<tr><th>Territory</th><th>People</th><th>Wrong side</th></tr>'
-    + s.territories.map((t) => {
-      const g = map.groups[t.major];
-      return `<tr><td>${String.fromCharCode(65 + t.id)} <i style="background:${g.color}"></i>${g.name}</td><td>${people(t.total)}</td><td>${pct(t.misplaced / t.total)}</td></tr>`;
-    }).join('');
+function renderTerritories(s) {
+  $('resTerr').innerHTML = s.territories.map((t) => {
+    const g = map.groups[t.major];
+    return `<li><b>${String.fromCharCode(65 + t.id)}</b><i style="background:${g.color}"></i>`
+      + `<span>Majority: ${g.name}</span><span class="n">${people(t.total)} people · ${pct(t.misplaced / t.total)} minorities</span></li>`;
+  }).join('');
+}
+
+// 100 people: those on the wrong side in full colour, the rest faded.
+function renderWaffle(s, best) {
+  const dots = peopleDots(map, s);
+  $('resWaffle').innerHTML = dots.map((d) => `<i class="${d.wrong ? 'wrong' : ''}" style="background:${map.groups[d.group].color}"></i>`).join('');
+  $('resWaffle').setAttribute('aria-label', `${dots.filter((d) => d.wrong).length} in every 100 people on the wrong side`);
+  $('resWaffleCap').textContent = `Every dot is 1 in 100 people, with ${best ? 'the best border' : 'your border'}`;
 }
 
 // A letter on each territory, on the square nearest its middle that is not
@@ -302,25 +312,24 @@ function showResults(entry) {
   $('results').hidden = false;
   $('timer').textContent = clock(entry.ms);
 
-  $('resShare').textContent = pct(s.share);
-  $('resPeople').innerHTML = `on the wrong side: ${people(s.misplaced)} people<br>${Math.round(entry.eff * 100)}% efficient · ${clock(entry.ms)}`;
+  const wrong = peopleDots(map, s).filter((d) => d.wrong).length;
+  $('resPeople').textContent = `${people(s.misplaced)} people`;
+  $('resPer100').textContent = `would be a minority in the ${count === 1 ? 'country' : 'countries'} you drew. That's ${wrong} in every 100.`;
 
-  const rows = [
-    ['No border', noBorder, ''],
-    ['Your border', s.misplaced, 'you'],
-    ['Best border', best, 'best'],
-    ['Floor', floor, ''],
-  ];
-  $('resBars').innerHTML = rows.map(([label, v, cls]) => `
-    <div class="bar ${cls}"><span>${label}</span><div class="track"><div class="fill" style="width:${(100 * v / noBorder).toFixed(1)}%"></div></div><span class="v">${pct(v / map.total)}</span></div>`).join('');
-
+  // The scale runs from no border (left) to the best possible border (right).
+  const eff = entry.eff;
+  $('resFill').style.width = `${(100 * eff).toFixed(1)}%`;
+  $('resPin').style.left = `${(100 * eff).toFixed(1)}%`;
+  $('resNone').textContent = pct(noBorder / map.total);
+  $('resBest').textContent = pct(best / map.total);
   const gap = s.misplaced - best;
-  $('resLesson').innerHTML = (gap <= 0
-    ? `You matched the best border we know. `
-    : `The best border leaves ${people(gap)} fewer people on the wrong side than yours. `)
-    + `But even the best border strands <strong>${people(best)} people (${pct(best / map.total)})</strong>. `
-    + `Even if every ${map.cellKm} km square became its own country, ${pct(floor / map.total)} would still be a minority where they live.`;
+  $('resVerdict').innerHTML = gap <= 0
+    ? `<strong>You: ${pct(s.share)}.</strong> You matched the best border we found.`
+    : `<strong>You: ${pct(s.share)}, ${Math.round(eff * 100)}% of the way there.</strong> The best border leaves ${people(gap)} fewer people on the wrong side.`;
 
+  $('resLesson').innerHTML = `Even the best possible border leaves <strong>${people(best)} people (${pct(best / map.total)})</strong> on the wrong side. `
+    + `Even if every ${map.cellKm} km square became its own country, ${people(floor)} still would.`;
+  $('resHistory').textContent = map.history;
 }
 
 function setView(v) {
@@ -367,7 +376,7 @@ function showStats() {
     [stats.played, 'Played'],
     [currentStreak(stats, today), 'Streak'],
     [stats.maxStreak, 'Best streak'],
-    [stats.bestEff == null ? '–' : `${Math.round(stats.bestEff * 100)}%`, 'Best efficiency'],
+    [stats.bestEff == null ? '–' : `${Math.round(stats.bestEff * 100)}%`, 'Best score'],
   ];
   $('statGrid').innerHTML = cells.map(([v, l]) => `<div><b>${v}</b><span>${l}</span></div>`).join('');
   $('stats').showModal();

@@ -7,7 +7,8 @@ export default {
   name: 'Bosnia and Herzegovina',
   subtitle: '1991 census',
   brief: 'Bosniaks, Serbs and Croats lived side by side across Bosnia, often in the same towns.',
-  note: 'Approximate 1991 census figures by municipality, counting only the three largest groups. In 1992–95 people were driven from their homes to make lines like these "work".',
+  source: 'Approximate 1991 census figures by municipality, counting only the three largest groups.',
+  history: 'In 1992–95 around 100,000 people were killed and more than two million were driven from their homes to make lines like these "work".',
   maxTerritories: 3,
   groups: [
     { key: 'b', name: 'Bosniaks', color: '#2a9d8f' },

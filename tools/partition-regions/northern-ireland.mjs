@@ -8,7 +8,8 @@ export default {
   name: 'Northern Ireland',
   subtitle: '2011 census',
   brief: 'Community background by district. Repartition was floated in the 1970s as a way out of the Troubles.',
-  note: 'Approximate 2011 census "community background" figures for the 26 former districts. Repartition was dropped, partly because no line could separate communities this mixed.',
+  source: 'Approximate 2011 census "community background" figures for the 26 former districts.',
+  history: 'Repartition was considered in the 1970s and dropped, partly because no line could separate communities this mixed. More than 3,500 people died in the Troubles.',
   maxTerritories: 2,
   groups: [
     { key: 'c', name: 'Catholic', color: '#2a9d8f' },

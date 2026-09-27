@@ -137,3 +137,33 @@ export function decodeAssignment(map, rows) {
   map.cells.forEach((cell, i) => { of[i] = rows[cell.r].charCodeAt(cell.c) - 65; });
   return of;
 }
+
+// A result as n people (100 by default): for each group, how many are on
+// the wrong side and how many live where their group is the majority.
+// Largest-remainder rounding keeps the total at exactly n. Returns dots in
+// display order, wrong side first: [{ group, wrong }].
+export function peopleDots(map, s, n = 100) {
+  const G = map.groups.length;
+  const counts = [];
+  for (let g = 0; g < G; g++) {
+    let right = 0, all = 0;
+    for (const t of s.territories) {
+      all += t.pops[g];
+      if (t.major === g) right += t.pops[g];
+    }
+    counts.push({ group: g, wrong: true, v: all - right }, { group: g, wrong: false, v: right });
+  }
+  const total = counts.reduce((a, c) => a + c.v, 0);
+  for (const c of counts) {
+    const q = total ? (c.v * n) / total : 0;
+    c.k = Math.floor(q);
+    c.rem = q - c.k;
+  }
+  let left = n - counts.reduce((a, c) => a + c.k, 0);
+  for (const c of [...counts].sort((a, b) => b.rem - a.rem)) if (left-- > 0) c.k++;
+  const dots = [];
+  for (const wrong of [true, false]) {
+    for (const c of counts) if (c.wrong === wrong) for (let i = 0; i < c.k; i++) dots.push({ group: c.group, wrong });
+  }
+  return dots;
+}

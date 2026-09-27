@@ -9,7 +9,8 @@ export default {
   name: 'Cyprus',
   subtitle: '1960, rough estimates',
   brief: 'Since 1974 Cyprus has been divided along a ceasefire line. Before that, Turkish Cypriots, about a fifth of the people, lived in towns and villages across the whole island; from 1964 many withdrew into armed enclaves.',
-  note: 'Rough estimates by town and village group in the pattern of the 1960 census. After 1974 around 160,000 Greek Cypriots and 45,000 Turkish Cypriots were displaced across the new line.',
+  source: 'Rough estimates by town and village group in the pattern of the 1960 census.',
+  history: 'After 1974 around 160,000 Greek Cypriots and 45,000 Turkish Cypriots were displaced across the new line, which still divides the island.',
   maxTerritories: 4,
   groups: [
     { key: 'g', name: 'Greek Cypriots', color: '#2a9d8f' },

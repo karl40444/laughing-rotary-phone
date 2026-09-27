@@ -40,17 +40,38 @@
     </section>
 
     <section class="results" id="results" hidden>
-      <div class="score">
-        <div class="big" id="resShare"></div>
-        <div class="sub" id="resPeople"></div>
-      </div>
-      <div class="bars" id="resBars"></div>
-      <p class="lesson" id="resLesson"></p>
       <div class="seg" role="tablist" aria-label="Show border">
         <button role="tab" data-view="mine" aria-selected="true">Your border</button>
         <button role="tab" data-view="best" aria-selected="false">Best border</button>
       </div>
-      <table class="terr" id="resTable"></table>
+
+      <div class="headline">
+        <div class="big" id="resPeople"></div>
+        <p id="resPer100"></p>
+      </div>
+
+      <div class="scale" id="resScale" aria-label="Your border between no border and the best possible border">
+        <div class="ends"><span>No border</span><span>Best possible</span></div>
+        <div class="track"><div class="fill" id="resFill"></div><div class="pin" id="resPin"></div></div>
+        <div class="ends vals"><span id="resNone"></span><span id="resBest"></span></div>
+        <p class="verdict" id="resVerdict"></p>
+      </div>
+
+      <p class="lesson" id="resLesson"></p>
+
+      <figure class="waffle-box">
+        <figcaption id="resWaffleCap"></figcaption>
+        <div class="waffle" id="resWaffle" role="img"></div>
+        <div class="waffle-key"><span><i class="wrong"></i>on the wrong side</span><span><i></i>in their own group's territory</span></div>
+      </figure>
+
+      <section class="history">
+        <h2>What happened</h2>
+        <p id="resHistory"></p>
+      </section>
+
+      <ul class="terr" id="resTerr"></ul>
+
       <div class="buttons">
         <button class="primary" id="shareBtn">Share</button>
         <button id="practiceBtn">Practise again</button>
@@ -63,7 +84,7 @@
     <p>Each day brings a new region, cut into squares. A square's colour shows the local majority; paler squares are more mixed, and bigger dots mean more people.</p>
     <p><strong>Drag along the grid lines</strong> to draw a border. A border only counts once it closes off a territory, running edge to edge or into another line. Loose ends show dashed. Tap a line to remove it, or drag back over it.</p>
     <p>Make <strong>two territories</strong> (more on some maps), then submit. In each territory the largest group is the majority, and everyone else is on the wrong side. <strong>Lower is better.</strong></p>
-    <p>You'll then see the best border we could find. It is almost never zero: people are too mixed for any line to separate them cleanly.</p>
+    <p>You'll then see the best border we could find. It is almost never zero: people are too mixed for any line to separate them cleanly. Your score is how far your line gets from no border at all towards that best possible border.</p>
     <p class="fine">Maps are simplified models built from approximate census figures, counting only the largest groups. "About this map", under the map, gives each map's sources and history.</p>
     <form method="dialog"><button class="primary">Play</button></form>
   </dialog>
