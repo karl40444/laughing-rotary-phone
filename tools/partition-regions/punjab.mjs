@@ -8,7 +8,8 @@ export default {
   name: 'Punjab',
   subtitle: '1941 census',
   brief: 'In 1947 the Radcliffe Line split Punjab between India and Pakistan. Muslims, Hindus and Sikhs lived intermixed across the province.',
-  note: 'Approximate 1941 census figures by district, for the British districts and the larger Sikh states. When Punjab was partitioned in 1947, hundreds of thousands were killed and around ten million people fled across the new border.',
+  source: 'Approximate 1941 census figures by district, for the British districts and the larger Sikh states.',
+  history: 'When Punjab was partitioned in 1947, hundreds of thousands of people were killed and around ten million fled across the new border.',
   maxTerritories: 2,
   groups: [
     { key: 'm', name: 'Muslims', color: '#2a9d8f' },

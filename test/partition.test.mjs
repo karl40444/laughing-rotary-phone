@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
   prepareMap, territories, score, floorScore, activeEdges, bordersOf, decodeAssignment, encodeAssignment,
-  edgeBetween, hKey, vKey,
+  edgeBetween, hKey, vKey, peopleDots,
 } from '../site/partition/js/engine.js';
 import {
   puzzleNumber, efficiency, shareText, emptyStats, recordResult, currentStreak,
@@ -52,6 +52,19 @@ test('misplaced counts everyone outside each territory\'s majority', () => {
   assert.equal(floorScore(toy), 10 + 50 + 10 + 20 + 40 + 0);
 });
 
+test('people dots add up to 100 and put the wrong side first', () => {
+  const { of, count } = territories(toy, new Set([vKey(1, 0), vKey(1, 1)]));
+  const dots = peopleDots(toy, score(toy, of, count));
+  assert.equal(dots.length, 100);
+  // 130 of 600 people are on the wrong side: 21.7, so 22 dots.
+  const wrong = dots.filter((d) => d.wrong);
+  assert.equal(wrong.length, 22);
+  assert.ok(dots.slice(0, 22).every((d) => d.wrong));
+  // Left territory is A-majority, so its 30 B are wrong; right is B-majority, so its 100 A are.
+  assert.equal(wrong.filter((d) => d.group === 1).length, 5);
+  assert.equal(wrong.filter((d) => d.group === 0).length, 17);
+});
+
 test('the solver finds the toy optimum', () => {
   const best = solve(toy, 2, { restarts: 4, steps: 5000 });
   assert.equal(best.misplaced, 130);
@@ -89,7 +102,7 @@ for (const [id, map] of Object.entries(maps)) {
     assert.equal(map.id, id);
     assert.ok(map.cells.length > 150 && map.cells.length < 400, `${map.cells.length} squares`);
     assert.ok(map.maxTerritories >= 2 && map.maxTerritories <= 4);
-    assert.ok(map.name && map.subtitle && map.brief && map.note && map.cellKm > 0);
+    assert.ok(map.name && map.subtitle && map.brief && map.source && map.history && map.cellKm > 0);
     assert.ok(map.cells.every((c) => c.total > 0 && c.pops.length === map.groups.length));
     // One connected landmass, so every square can join a territory.
     assert.equal(territories(map, new Set()).count, 1);
@@ -156,7 +169,7 @@ test('the share card gives nothing away', () => {
     territories: [{ misplaced: 5, total: 100 }, { misplaced: 30, total: 100 }], ms: 84000,
   });
   assert.match(text, /^Partition #3 · Bosnia and Herzegovina/);
-  assert.match(text, /🟦{6}⬜{4} 62%/u);
+  assert.match(text, /🟦{6}⬜{4} 62% of the way to the best line/u);
   assert.match(text, /🟩🟨 45\.7% on the wrong side/u);
   assert.match(text, /1:24/);
   assert.equal(text.split('\n').length, 4);

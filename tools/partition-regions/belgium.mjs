@@ -7,7 +7,8 @@ export default {
   name: 'Belgium',
   subtitle: 'languages, rough estimates',
   brief: 'Dutch speakers in the north, French speakers in the south, a German-speaking east, and a mostly French-speaking Brussels inside Flanders.',
-  note: 'Rough estimates by arrondissement: there has been no language census since 1947. Belgium fixed its language border in 1963; here a line mostly works, apart from Brussels.',
+  source: 'Rough estimates by arrondissement: there has been no language census since 1947.',
+  history: 'Belgium fixed its language border in 1963 and has since handed power to its language communities. Here a line mostly works, apart from Brussels.',
   maxTerritories: 3,
   groups: [
     { key: 'nl', name: 'Dutch', color: '#2a9d8f' },
