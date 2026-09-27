@@ -64,7 +64,7 @@ A second, separate game in `site/partition/` (served at `/partition/`). Each day
 
 After you submit, the game shows your score as a number of people and as a percentage. It compares that with no border at all, the best border its search found, and the **floor**: what would remain even if every square became its own country. The best score is never zero, and that is the point: people are too mixed for a line to separate them.
 
-There are six maps, one per day in rotation, repeating:
+There are twelve maps, one per day in rotation, repeating:
 
 | # | Map | Data | Territories | No border | Best border | Floor |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -74,8 +74,14 @@ There are six maps, one per day in rotation, repeating:
 | 4 | Belgium | language, rough estimates by arrondissement | 3 | 42.8% | 7.5% | 7.5% |
 | 5 | North Macedonia | 2002 census, by municipality | 2 | 32.9% | 21.2% | 20.8% |
 | 6 | Mandatory Palestine | 1945 Village Statistics, by subdistrict | 2 | 33.1% | 22.1% | 21.6% |
+| 7 | Bengal | 1941 census, by district | 2 | 44.1% | 27.7% | 27.5% |
+| 8 | Sri Lanka | 2012 census, by district, eastern districts split | 2 | 24.6% | 17.8% | 16.5% |
+| 9 | Cyprus | 1960 pattern, rough estimates by village group | 4 | 18.8% | 17.8% | 16.8% |
+| 10 | Jammu and Kashmir | 1941 census, by district | 3 | 21.0% | 15.5% | 15.5% |
+| 11 | Armenia and Azerbaijan | 1979 census, by city and district | 2 | 38.7% | 9.1% | 9.0% |
+| 12 | Quebec and eastern Ontario | 2021 census mother tongue, by region | 2 | 22.1% | 14.1% | 14.1% |
 
-Belgium is the deliberate contrast: there, a line nearly works.
+Belgium and Armenia–Azerbaijan are the contrasts where a line nearly works, though in the Caucasus even the best line leaves about 700,000 people on the wrong side. Cyprus is the opposite: Turkish Cypriots were so scattered that even four territories, drawn like the 1964–74 enclaves, barely help.
 
 - **Drawing:** drag along grid lines to draw; drag back over a line or tap it to erase. Lines count once they close off a territory; loose ends show dashed. Tap inside a square to see who lives there.
 - **Score:** misplaced people and share of the population. **Efficiency** is how much of the avoidable misplacement you removed, from 0% (no better than no border) to 100% (as good as the best border). It is comparable across maps, so it drives the personal best.
@@ -84,11 +90,11 @@ Belgium is the deliberate contrast: there, a line nearly works.
 
 ### Data and the best border
 
-`tools/build-partition.mjs` builds `site/partition/data/<id>.json` from the definitions in `tools/partition-regions/`. Each region lists anchors (municipalities, districts or towns) with a population and each group's share, and they are spread over a square grid with a Gaussian kernel. Outlines come from Natural Earth (via `world-atlas`), apart from Bosnia and 1941 Punjab, which are traced by hand. Only the largest groups are counted on each map.
+`tools/build-partition.mjs` builds `site/partition/data/<id>.json` from the definitions in `tools/partition-regions/`. Each region lists anchors (municipalities, districts or towns) with a population and each group's share, and they are spread over a square grid with a Gaussian kernel. Outlines come from Natural Earth (via `world-atlas`), apart from Bosnia, 1941 Punjab, 1941 Bengal, 1941 Jammu and Kashmir, and Quebec with eastern Ontario, which are traced by hand. A region can also cut out lakes (`holes`) and join land across causeways (`links`). Only the largest groups are counted on each map.
 
-**The figures were entered from memory of the published results and are approximate. They should be checked against the sources before the game is promoted.** Belgium has had no language census since 1947, so its figures are rough estimates.
+**The figures were entered from memory of the published results and are approximate. They should be checked against the sources before the game is promoted.** A few figures were spot-checked against the census through web search (noted in each region file). Belgium has had no language census since 1947, and the Cyprus village groups and Quebec regions are estimates, so those three are the roughest.
 
-The builder then runs `tools/partition-solve.mjs`, a simulated-annealing search over contiguous splits with 40 restarts, and stores the best result. That result is the best found, not a proven optimum; a test checks that a quick independent search never beats it. Rebuild everything with `npm run build:partition` (about a minute), or one map with `node tools/build-partition.mjs <id>`.
+The builder then runs `tools/partition-solve.mjs`, a simulated-annealing search over contiguous splits with 40 restarts, and stores the best result. That result is the best found, not a proven optimum; a test checks that a quick independent search never beats it. Rebuild everything with `npm run build:partition` (a few minutes), or one map with `node tools/build-partition.mjs <id>`.
 
 | Path | What it does |
 | --- | --- |

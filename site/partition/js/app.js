@@ -90,12 +90,16 @@ for (const { r, c } of map.cells) {
 el('path', { d: outline, class: 'outline' }, svg);
 for (const p of map.places) {
   el('circle', { cx: p.c + 0.5, cy: p.r + 0.5, r: 0.07, fill: 'currentColor' }, gPlaces);
-  const t = el('text', { x: p.c + 0.62, y: p.r + 0.42, class: 'place' }, gPlaces);
+  // Labels near the right edge go on the left of their dot so they fit.
+  const left = p.c >= map.cols - 4;
+  const t = el('text', { x: left ? p.c + 0.38 : p.c + 0.62, y: p.r + 0.42, class: 'place', 'text-anchor': left ? 'end' : 'start' }, gPlaces);
   t.textContent = p.name;
 }
 
 $('puzzleNum').textContent = `#${number}${replay ? ' · practice' : ''}`;
-const parts = map.maxTerritories === 2 ? 'two territories' : 'two or three territories';
+const NUMBER = ['', 'one', 'two', 'three', 'four', 'five', 'six'];
+const parts = map.maxTerritories === 2 ? 'two territories'
+  : map.maxTerritories === 3 ? 'two or three territories' : `two to ${NUMBER[map.maxTerritories]} territories`;
 $('brief').innerHTML = `<strong>${map.name}</strong>, ${map.subtitle}. ${map.brief} Split it into ${parts} and leave as few people as possible on the wrong side.`;
 $('note').textContent = map.note;
 document.title = `Partition #${number}: ${map.name}`;
