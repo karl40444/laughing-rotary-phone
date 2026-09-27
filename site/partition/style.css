@@ -75,6 +75,7 @@ button.icon svg { width: 22px; height: 22px; fill: var(--ink); display: block; m
   touch-action: none;
   user-select: none;
   -webkit-user-select: none;
+  max-height: 68vh;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -94,6 +95,10 @@ button.icon svg { width: 22px; height: 22px; fill: var(--ink); display: block; m
 #map text, #map .tag { pointer-events: none; }
 
 .inspect { font-size: 13px; color: var(--muted); margin-top: 6px; min-height: 1.45em; }
+
+.about { font-size: 13px; color: var(--muted); margin: 4px 0 0; }
+.about summary { cursor: pointer; }
+.about p { margin: 4px 0 0; }
 
 .controls { margin-top: 10px; }
 .status { display: flex; justify-content: space-between; color: var(--muted); font-size: 14px; margin-bottom: 8px; }

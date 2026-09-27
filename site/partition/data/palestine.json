@@ -1,0 +1,147 @@
+{
+ "id": "palestine",
+ "name": "Mandatory Palestine",
+ "subtitle": "1945 estimates",
+ "brief": "In 1947 the UN proposed splitting Palestine into a Jewish and an Arab state. Arabs and Jews lived in the same cities and valleys.",
+ "note": "Approximate figures from the 1945 Village Statistics by subdistrict; the almost empty southern Negev is left off. The Jewish state in the UN plan would have had an Arab population of over 40%; in the war that followed, around 700,000 Palestinian Arabs fled or were expelled.",
+ "cols": 14,
+ "rows": 30,
+ "cellKm": 11,
+ "maxTerritories": 2,
+ "groups": [
+  {
+   "key": "ar",
+   "name": "Arabs",
+   "color": "#2a9d8f"
+  },
+  {
+   "key": "je",
+   "name": "Jews",
+   "color": "#7b6cc4"
+  }
+ ],
+ "places": [
+  {
+   "name": "Haifa",
+   "r": 5,
+   "c": 6
+  },
+  {
+   "name": "Acre",
+   "r": 4,
+   "c": 8
+  },
+  {
+   "name": "Safad",
+   "r": 3,
+   "c": 11
+  },
+  {
+   "name": "Tiberias",
+   "r": 5,
+   "c": 11
+  },
+  {
+   "name": "Nazareth",
+   "r": 6,
+   "c": 9
+  },
+  {
+   "name": "Nablus",
+   "r": 11,
+   "c": 9
+  },
+  {
+   "name": "Tel Aviv",
+   "r": 12,
+   "c": 5
+  },
+  {
+   "name": "Jerusalem",
+   "r": 15,
+   "c": 8
+  },
+  {
+   "name": "Hebron",
+   "r": 18,
+   "c": 7
+  },
+  {
+   "name": "Gaza",
+   "r": 18,
+   "c": 2
+  },
+  {
+   "name": "Beersheba",
+   "r": 21,
+   "c": 5
+  }
+ ],
+ "grid": [
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,[30,0]],
+  [null,null,null,null,null,null,null,null,null,null,null,[40,10],[30,0],[30,0]],
+  [null,null,null,null,null,null,null,null,null,null,null,[1560,210],[230,30],[30,0]],
+  [null,null,null,null,null,null,null,null,[20330,860],[3140,180],[9820,1340],[14990,2060],[1970,270],[50,10]],
+  [null,null,null,null,null,null,null,null,[35500,1850],[5050,280],[8880,1480],[14510,2770],[2160,490],[50,10]],
+  [null,null,null,null,null,null,[34460,37060],[23810,22220],[7710,1880],[5250,1030],[5370,2100],[11420,5310],[2710,1290],[70,40]],
+  [null,null,null,null,null,null,[13390,11210],[6890,7320],[7710,7280],[17240,5340],[5790,1610],[4370,2120],[1060,520],null],
+  [null,null,null,null,null,null,[19470,8660],[5880,4720],[5960,11100],[8370,4950],[3210,890],[2180,810],null,null],
+  [null,null,null,null,null,null,[9620,7620],[2540,1720],[6680,1670],[19040,730],[9780,1860],[7680,2800],null,null],
+  [null,null,null,null,null,null,[12260,9260],[9340,1260],[6600,40],[16660,40],[5850,600],[2570,910],null,null],
+  [null,null,null,null,null,null,[19290,1490],[26160,190],[12700,0],[13440,0],[1740,20],[110,30],null,null],
+  [null,null,null,null,null,[4130,23260],[6030,3750],[8140,140],[23350,0],[29590,0],[3310,0],[60,0],null,null],
+  [null,null,null,null,null,[36200,154990],[7560,21850],[850,720],[4770,0],[6130,0],[710,0],null,null,null],
+  [null,null,null,null,null,[41690,94430],[9720,11560],[1750,340],[4820,60],[1910,30],[400,0],null,null,null],
+  [null,null,null,null,[9610,14430],[18650,17270],[16530,2060],[8630,950],[22820,4900],[9150,2230],[3690,90],null,null,null],
+  [null,null,null,null,[1610,3020],[6900,4360],[20460,640],[16410,6400],[36790,33930],[14610,15340],[3720,590],[1730,0],null,null],
+  [null,null,null,[19400,1680],[3280,360],[1090,140],[4830,90],[18310,4090],[44750,20610],[12110,9110],[600,360],null,null,null],
+  [null,null,null,[16480,1270],[2650,210],[340,10],[3000,10],[20800,330],[20000,1320],[2850,510],[80,30],null,null,null],
+  [null,null,[47990,40],[7180,90],[820,20],[680,10],[5740,0],[32820,10],[17290,20],[870,0],[40,0],null,null,null],
+  [null,[17310,0],[14610,0],[2580,10],[1180,10],[1150,10],[1770,10],[6160,0],[3170,0],[220,0],[50,0],null,null,null],
+  [[14140,0],[10530,0],[1810,10],[1410,10],[1700,10],[1640,10],[1230,10],[770,10],[350,0],[120,0],[50,0],null,null,null],
+  [[1860,0],[1720,0],[1160,10],[1610,10],[1940,10],[1840,10],[1350,10],[770,10],[350,0],[140,0],null,null,null,null],
+  [null,[710,0],[1120,0],[1540,10],[1780,10],[1650,10],[1200,10],[700,0],[330,0],[150,0],[70,0],null,null,null],
+  [null,[660,0],[990,0],[1270,0],[1390,10],[1260,10],[920,0],[560,0],[300,0],[150,0],null,null,null,null],
+  [null,[550,0],[780,0],[960,0],[1010,0],[900,0],[680,0],[450,0],[270,0],[160,0],null,null,null,null],
+  [null,null,[570,0],[690,0],[720,0],[660,0],[530,0],[380,0],[260,0],[170,0],null,null,null,null],
+  [null,null,[390,0],[480,0],[520,0],[500,0],[430,0],[340,0],[250,0],null,null,null,null,null],
+  [null,null,[260,0],[330,0],[380,0],[390,0],[360,0],[300,0],[230,0],null,null,null,null,null],
+  [null,null,null,[230,0],[270,0],[290,0],[280,0],[240,0],null,null,null,null,null,null],
+  [null,null,null,[160,0],[190,0],[210,0],[210,0],[180,0],null,null,null,null,null,null]
+ ],
+ "optimum": {
+  "misplaced": 425790,
+  "assignment": [
+  ".............A",
+  "...........AAA",
+  "...........AAA",
+  "........AAAAAA",
+  "........AAAAAA",
+  "......AAAAAAAA",
+  "......AAAAAAA.",
+  "......AAAAAA..",
+  "......AAAAAA..",
+  "......AAAAAA..",
+  "......AAAAAA..",
+  ".....BAAAAAA..",
+  ".....BBAAAA...",
+  ".....BBAAAA...",
+  "....BBAAAAA...",
+  "....BAAAAAAA..",
+  "...AAAAAAAA...",
+  "...AAAAAAAA...",
+  "..AAAAAAAAA...",
+  ".AAAAAAAAAA...",
+  "AAAAAAAAAAA...",
+  "AAAAAAAAAA....",
+  ".AAAAAAAAAA...",
+  ".AAAAAAAAA....",
+  ".AAAAAAAAA....",
+  "..AAAAAAAA....",
+  "..AAAAAAA.....",
+  "..AAAAAAA.....",
+  "...AAAAA......",
+  "...AAAAA......"
+ ]
+ }
+}

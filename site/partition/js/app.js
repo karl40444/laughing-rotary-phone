@@ -2,6 +2,7 @@
 import {
   prepareMap, territories, score, floorScore, activeEdges, bordersOf, decodeAssignment, edgeBetween, edgeEnds, hKey, vKey,
 } from './engine.js';
+import { regionFor } from './regions.js';
 import {
   puzzleNumber, efficiency, shareText, emptyStats, recordResult, currentStreak, clock,
 } from './daily.js';
@@ -25,8 +26,12 @@ const store = {
   set(key, v) { try { localStorage.setItem(key, JSON.stringify(v)); } catch { /* private mode */ } },
 };
 
-const number = puzzleNumber();
-const map = prepareMap(await (await fetch('data/bosnia.json')).json());
+// ?puzzle=N replays another day's map as practice; it never counts.
+const today = puzzleNumber();
+const asked = parseInt(new URLSearchParams(location.search).get('puzzle'), 10);
+const replay = asked >= 1 && asked !== today;
+const number = replay ? asked : today;
+const map = prepareMap(await (await fetch(`data/${regionFor(number)}.json`)).json());
 const bestOf = decodeAssignment(map, map.optimum.assignment);
 const bestEdges = bordersOf(map, bestOf);
 const noBorder = score(map, new Int32Array(map.cells.length), 1).misplaced;
@@ -38,7 +43,7 @@ let stroke = null;
 let started = 0;
 let elapsed = 0;
 let timerId = 0;
-let practice = false;
+let practice = replay;
 let result = null; // set once submitted
 let view = 'mine';
 let stats = { ...emptyStats(), ...(store.get(STATS_KEY) || {}) };
@@ -89,8 +94,11 @@ for (const p of map.places) {
   t.textContent = p.name;
 }
 
-$('puzzleNum').textContent = `#${number}`;
-$('brief').innerHTML = `<strong>${map.name}</strong>. Draw borders to split it into two or three territories and leave as few people as possible on the wrong side.`;
+$('puzzleNum').textContent = `#${number}${replay ? ' · practice' : ''}`;
+const parts = map.maxTerritories === 2 ? 'two territories' : 'two or three territories';
+$('brief').innerHTML = `<strong>${map.name}</strong>, ${map.subtitle}. ${map.brief} Split it into ${parts} and leave as few people as possible on the wrong side.`;
+$('note').textContent = map.note;
+document.title = `Partition #${number}: ${map.name}`;
 $('legend').innerHTML = map.groups.map((g) => `<li><i style="background:${g.color}"></i>${g.name}</li>`).join('')
   + '<li class="mixed">pale = mixed · dot = population</li>';
 
@@ -269,7 +277,7 @@ function submit() {
   const { of, count } = territories(map, edges);
   const s = score(map, of, count);
   const eff = efficiency(s.misplaced, noBorder, map.optimum.misplaced);
-  const entry = { misplaced: s.misplaced, eff, ms: Math.round(elapsed), edges: [...edges] };
+  const entry = { region: map.id, misplaced: s.misplaced, eff, ms: Math.round(elapsed), edges: [...edges] };
   if (!practice) {
     stats = recordResult(stats, number, entry);
     store.set(STATS_KEY, stats);
@@ -307,7 +315,7 @@ function showResults(entry) {
     ? `You matched the best border we know. `
     : `The best border leaves ${people(gap)} fewer people on the wrong side than yours. `)
     + `But even the best border strands <strong>${people(best)} people (${pct(best / map.total)})</strong>. `
-    + `Even if every 16 km square became its own country, ${pct(floor / map.total)} would still be a minority where they live.`;
+    + `Even if every ${map.cellKm} km square became its own country, ${pct(floor / map.total)} would still be a minority where they live.`;
 
 }
 
@@ -353,7 +361,7 @@ function toast(msg) {
 function showStats() {
   const cells = [
     [stats.played, 'Played'],
-    [currentStreak(stats, number), 'Streak'],
+    [currentStreak(stats, today), 'Streak'],
     [stats.maxStreak, 'Best streak'],
     [stats.bestEff == null ? '–' : `${Math.round(stats.bestEff * 100)}%`, 'Best efficiency'],
   ];
@@ -365,7 +373,8 @@ $('helpBtn').onclick = () => $('help').showModal();
 
 // ---------- start ----------
 
-const today = stats.results[number];
-if (today) showResults(today);
+// Today's result comes back after a reload (unless it was for another map).
+const done = replay ? null : stats.results[number];
+if (done && (done.region ?? 'bosnia') === map.id) showResults(done);
 else refresh();
 if (!store.get(HELP_KEY)) { store.set(HELP_KEY, true); $('help').showModal(); }

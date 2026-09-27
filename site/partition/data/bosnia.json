@@ -1,7 +1,9 @@
 {
  "id": "bosnia",
  "name": "Bosnia and Herzegovina",
- "subtitle": "simplified, 1991 census",
+ "subtitle": "1991 census",
+ "brief": "Bosniaks, Serbs and Croats lived side by side across Bosnia, often in the same towns.",
+ "note": "Approximate 1991 census figures by municipality, counting only the three largest groups. In 1992–95 people were driven from their homes to make lines like these \"work\".",
  "cols": 19,
  "rows": 19,
  "cellKm": 16,
