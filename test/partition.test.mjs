@@ -69,6 +69,12 @@ const EXPECTED = {
   belgium: { Antwerp: 'Dutch', Ghent: 'Dutch', Brussels: 'French', Liège: 'French', Eupen: 'German' },
   'north-macedonia': { Tetovo: 'Albanians', Bitola: 'Macedonians', Štip: 'Macedonians', Debar: 'Albanians' },
   palestine: { 'Tel Aviv': 'Jews', Nablus: 'Arabs', Hebron: 'Arabs', Gaza: 'Arabs' },
+  bengal: { Dacca: 'Muslims', Mymensingh: 'Muslims', Calcutta: 'Hindus', Burdwan: 'Hindus', Midnapore: 'Hindus' },
+  'sri-lanka': { Jaffna: 'Tamils', Colombo: 'Sinhalese', Galle: 'Sinhalese', 'Nuwara Eliya': 'Tamils', Kalmunai: 'Muslims' },
+  cyprus: { Limassol: 'Greek Cypriots', Morphou: 'Greek Cypriots', Lefka: 'Turkish Cypriots' },
+  kashmir: { Srinagar: 'Muslims', Jammu: 'Hindus', Kathua: 'Hindus', Leh: 'Buddhists', Gilgit: 'Muslims' },
+  'armenia-azerbaijan': { Yerevan: 'Armenians', Stepanakert: 'Armenians', Baku: 'Azerbaijanis', Nakhchivan: 'Azerbaijanis' },
+  quebec: { 'Quebec City': 'French', 'Trois-Rivières': 'French', Ottawa: 'English', Brockville: 'English', 'Prescott-Russell': 'French' },
 };
 
 test('the rotation starts with Bosnia and repeats', () => {
@@ -82,7 +88,7 @@ for (const [id, map] of Object.entries(maps)) {
   test(`${id}: the map is well formed and plausible`, () => {
     assert.equal(map.id, id);
     assert.ok(map.cells.length > 150 && map.cells.length < 400, `${map.cells.length} squares`);
-    assert.ok(map.maxTerritories >= 2 && map.maxTerritories <= 3);
+    assert.ok(map.maxTerritories >= 2 && map.maxTerritories <= 4);
     assert.ok(map.name && map.subtitle && map.brief && map.note && map.cellKm > 0);
     assert.ok(map.cells.every((c) => c.total > 0 && c.pops.length === map.groups.length));
     // One connected landmass, so every square can join a territory.

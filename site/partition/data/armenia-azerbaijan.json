@@ -1,0 +1,129 @@
+{
+ "id": "armenia-azerbaijan",
+ "name": "Armenia and Azerbaijan",
+ "subtitle": "1979 census",
+ "brief": "Soviet Armenia and Azerbaijan in 1979. Nagorno-Karabakh, mostly Armenian, lay inside Azerbaijan; Azerbaijanis lived across Armenia, and Baku had a large Armenian community.",
+ "note": "Approximate 1979 census figures by city and district, counting only Armenians and Azerbaijanis. Between 1988 and 1994 more than a million people fled or were driven out across these lines, and in 2023 almost all of Nagorno-Karabakh's Armenians, over 100,000 people, fled to Armenia.",
+ "cols": 30,
+ "rows": 21,
+ "cellKm": 19,
+ "maxTerritories": 2,
+ "groups": [
+  {
+   "key": "hy",
+   "name": "Armenians",
+   "color": "#e76f51"
+  },
+  {
+   "key": "az",
+   "name": "Azerbaijanis",
+   "color": "#2a9d8f"
+  }
+ ],
+ "places": [
+  {
+   "name": "Yerevan",
+   "r": 10,
+   "c": 3
+  },
+  {
+   "name": "Leninakan",
+   "r": 6,
+   "c": 0
+  },
+  {
+   "name": "Baku",
+   "r": 9,
+   "c": 27
+  },
+  {
+   "name": "Kirovabad",
+   "r": 7,
+   "c": 12
+  },
+  {
+   "name": "Stepanakert",
+   "r": 12,
+   "c": 14
+  },
+  {
+   "name": "Nakhchivan",
+   "r": 15,
+   "c": 7
+  },
+  {
+   "name": "Lankaran",
+   "r": 17,
+   "c": 23
+  },
+  {
+   "name": "Shaki",
+   "r": 4,
+   "c": 15
+  },
+  {
+   "name": "Vardenis",
+   "r": 10,
+   "c": 9
+  },
+  {
+   "name": "Zangezur",
+   "r": 15,
+   "c": 11
+  },
+  {
+   "name": "Agdam",
+   "r": 11,
+   "c": 14
+  }
+ ],
+ "grid": [
+  [null,null,null,null,null,null,null,null,null,null,null,null,[0,350],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,[0,180],[150,10600],[500,34740],[50,3190],null,null,null,null,null,null,null,[10,350],null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,[170,12090],[570,39670],[50,3630],[0,190],null,null,null,null,null,[490,34410],[280,19320],[10,390],null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,[90,2300],[40,1980],null,null,null,null,[20,1320],[10,770],[150,13740],null,null,null,[0,100],[50,3520],[1010,70910],[570,39780],[10,700],null,null,null,null,null,null],
+  [null,null,[3470,110],[8570,280],[760,30],[7590,1070],[18980,4800],[2690,67410],[1200,57520],[30,1430],null,[10,110],null,[0,100],[30,2690],[700,62880],[460,41300],[10,830],[0,100],[0,100],[0,290],[60,4050],[30,2310],[0,130],[0,100],null,null,null,null,null],
+  [[27230,14280],[5670,740],[23190,740],[63090,1970],[7950,220],[7260,920],[24030,4220],[4290,55670],[1000,47440],[80,2110],[510,9490],[160,2750],[40,260],[20,100],[50,720],[220,8970],[70,5330],[0,190],[0,100],[20,730],[40,1780],[0,230],[0,120],[0,100],[0,100],null,null,null,null,null],
+  [[82550,7780],[64320,690],[8260,200],[69850,1590],[39500,840],[4830,160],[36290,1240],[9330,1680],[220,1210],[330,6090],[3310,61180],[2540,26110],[4000,22940],[290,1690],[880,7030],[3040,24310],[300,2390],[10,100],[0,190],[210,9530],[560,25300],[50,3120],[70,6600],[10,1050],[0,100],[20,160],null,null,null,null],
+  [[29020,250],[25970,140],[2130,20],[16810,340],[10460,220],[760,20],[4960,360],[8430,3180],[2850,1220],[120,1230],[2220,16370],[10110,51710],[16930,94130],[1150,6470],[550,4390],[1880,15060],[190,1500],[10,90],[0,140],[90,3930],[230,10410],[170,14960],[800,76180],[120,11190],[0,140],[290,2000],null,null,null,null],
+  [[420,0],[1130,10],[28920,160],[33370,180],[2160,10],[2820,30],[25090,390],[10530,1940],[1770,750],[190,460],[5080,15810],[11240,31380],[7710,13050],[480,830],[40,160],[40,340],[10,110],[0,100],[0,140],[0,160],[0,230],[50,4580],[250,24210],[40,3610],[0,110],[210,1500],[10780,67110],[90210,348960],[74010,260070],[1840,6450]],
+  [[270,10],[11170,570],[51450,1100],[158110,860],[111790,590],[11090,100],[75970,790],[18950,230],[940,1140],[3600,5380],[1040,3720],[1670,2760],[2150,540],[820,200],[2380,650],[300,130],[10,90],[10,2120],[130,25830],[50,8960],[0,180],[0,140],[0,310],[0,130],[0,100],[20,120],[2760,10240],[87020,305220],null,null],
+  [[1050,60],[57510,3120],[105300,5150],[372370,3240],[342030,6020],[10290,500],[6420,70],[1670,40],[2240,3240],[10550,17410],[1480,23690],[50,6080],[110,110],[5400,2020],[19970,18190],[2230,7320],[20,260],[170,32200],[2110,408760],[730,140830],[10,1410],[0,100],[0,100],[0,100],[0,100],[20,80],null,null,null,null],
+  [null,null,null,null,[173940,43470],[16130,4550],[190,60],[930,370],[560,430],[880,2200],[160,9540],[10,2670],[160,90],[4470,4230],[12740,61000],[6680,30420],[270,530],[70,13890],[910,175700],[310,60570],[0,660],[0,100],[0,100],[0,110],[0,120],[0,100],null,null,null,null],
+  [null,null,null,null,null,[4270,1250],[1180,470],[15550,6220],[5970,2390],[130,70],[0,210],[10,540],[390,2250],[13260,7360],[20940,15080],[12220,9160],[530,1900],[0,280],[10,2140],[0,800],[0,110],[0,100],[0,230],[30,6270],[40,8300],[0,390],null,null,null,null],
+  [null,null,null,null,null,[110,30],[610,240],[7670,3070],[2970,1190],[100,40],[10,120],[110,4850],[340,22970],[1690,5310],[4390,5470],[6860,42600],[620,19650],[0,350],null,null,[0,100],[0,100],[10,1540],[370,70870],[500,94130],[20,3480],null,null,null,null],
+  [null,null,null,null,null,null,[20,160],[140,2320],[70,1980],[0,140],[380,70],[10410,3090],[9980,10740],[350,8240],[3850,13510],[9720,31810],[720,6950],null,null,null,null,[0,100],[0,550],[120,22050],[150,29270],[10,1150],null,null,null,null],
+  [null,null,null,null,null,null,null,[1200,82020],[1020,70160],[30,1720],[1430,220],[47340,7330],[45240,16650],[1330,32280],[220,9560],[480,10490],null,null,null,null,[0,100],[0,100],[0,100],[0,280],[0,340],null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,[1040,71070],[30,1740],[250,40],[5940,920],[5670,2080],[170,4070],null,null,null,null,null,null,null,[0,100],[0,160],[0,380],[0,130],null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[90,10],[110,20],[90,30],null,null,null,null,null,null,null,[0,100],[0,240],[130,22970],[570,99460],null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[0,100],[10,1450],[1230,216310],null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[310,55400],null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[0,480],null,null,null,null,null,null,null]
+ ],
+ "optimum": {
+  "misplaced": 690590,
+  "assignment": [
+  "............A.................",
+  "...........AAAA.......A.......",
+  "............AAAA.....AAA......",
+  ".......AA....AAA...AAAAA......",
+  "..BBBBBAAA.A.AAAAAAAAAAAA.....",
+  "BBBBBBBAAAAAAAAAAAAAAAAAA.....",
+  "BBBBBBBBAAAAAAAAAAAAAAAAAA....",
+  "BBBBBBBBBAAAAAAAAAAAAAAAAA....",
+  "BBBBBBBBBAAAAAAAAAAAAAAAAAAAAA",
+  "BBBBBBBBAAAABBBBAAAAAAAAAAAA..",
+  "BBBBBBBBAAAABBBAAAAAAAAAAA....",
+  "....BBBBBAAABBAAAAAAAAAAAA....",
+  ".....BBBBBBBBBBBAAAAAAAAAA....",
+  ".....BBBBBBAAAAAAA..AAAAAA....",
+  "......AAAABBAAAAA....AAAAA....",
+  ".......AAABBBAAA....AAAAA.....",
+  "........AAABAA.......AAAA.....",
+  "..........AAA.......AAAA......",
+  "....................AAA.......",
+  "......................A.......",
+  "......................A......."
+ ]
+ }
+}

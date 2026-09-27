@@ -66,6 +66,13 @@ export function build(region) {
     const p = centre(r, c);
     if (polygons.some((rings) => insidePolygon(p, rings)) && !(region.holes ?? []).some((h) => insideRing(p, h))) isLand[r * cols + c] = 1;
   }
+  // Causeways and narrow isthmuses the grid would miss, as [from, to] lines.
+  for (const [[x1, y1], [x2, y2]] of region.links ?? []) {
+    for (let t = 0; t <= 1; t += 0.02) {
+      const [r, c] = toCell(x1 + t * (x2 - x1), y1 + t * (y2 - y1));
+      if (r >= 0 && r < rows && c >= 0 && c < cols) isLand[r * cols + c] = 1;
+    }
+  }
   // Keep the largest group of edge-connected squares: islands and squares
   // touching only at a corner could never join a territory.
   let land = [];

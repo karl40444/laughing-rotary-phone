@@ -1,0 +1,120 @@
+{
+ "id": "cyprus",
+ "name": "Cyprus",
+ "subtitle": "1960, rough estimates",
+ "brief": "Since 1974 Cyprus has been divided along a ceasefire line. Before that, Turkish Cypriots, about a fifth of the people, lived in towns and villages across the whole island; from 1964 many withdrew into armed enclaves.",
+ "note": "Rough estimates by town and village group in the pattern of the 1960 census. After 1974 around 160,000 Greek Cypriots and 45,000 Turkish Cypriots were displaced across the new line.",
+ "cols": 32,
+ "rows": 19,
+ "cellKm": 6,
+ "maxTerritories": 4,
+ "groups": [
+  {
+   "key": "g",
+   "name": "Greek Cypriots",
+   "color": "#2a9d8f"
+  },
+  {
+   "key": "t",
+   "name": "Turkish Cypriots",
+   "color": "#e76f51"
+  }
+ ],
+ "places": [
+  {
+   "name": "Nicosia",
+   "r": 7,
+   "c": 16
+  },
+  {
+   "name": "Kyrenia",
+   "r": 4,
+   "c": 14
+  },
+  {
+   "name": "Famagusta",
+   "r": 8,
+   "c": 25
+  },
+  {
+   "name": "Larnaca",
+   "r": 12,
+   "c": 20
+  },
+  {
+   "name": "Limassol",
+   "r": 16,
+   "c": 11
+  },
+  {
+   "name": "Paphos",
+   "r": 15,
+   "c": 2
+  },
+  {
+   "name": "Lefka",
+   "r": 8,
+   "c": 8
+  },
+  {
+   "name": "Morphou",
+   "r": 7,
+   "c": 10
+  },
+  {
+   "name": "Polis",
+   "r": 10,
+   "c": 2
+  },
+  {
+   "name": "Louroujina",
+   "r": 10,
+   "c": 18
+  }
+ ],
+ "grid": [
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[4010,210],[3880,200]],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[1680,250],[2610,170],[3230,170],null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[270,320],[750,1030],[1220,840],[1670,230],null,null],
+  [null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,[70,10],[40,10],[30,0],[40,30],[180,360],[530,1150],null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[470,100],[1580,350],[1350,300],[490,90],[3660,420],null,null,null,null,[20,0],[110,20],[570,90],[770,130],[260,50],[40,10],[30,10],[70,100],null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[1040,90],[1820,260],[1180,220],[370,70],[1960,330],[8170,1300],[8310,1360],[2100,400],[150,40],[40,10],[350,70],[1910,450],[2620,730],[870,300],[90,40],null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[3890,140],[4510,210],[2620,200],[1090,130],[550,540],[2570,2190],[5240,3250],[3120,1540],[510,200],[190,20],[600,150],[1810,1070],[2370,2070],[850,1000],[270,190],null,null,null,null,null,null,null],
+  [null,null,null,null,null,[960,780],[390,330],null,null,null,[4870,250],[7350,400],[8370,680],[4540,440],[1100,640],[4970,3160],[14130,5890],[9770,3120],[1780,430],[1510,90],[3220,290],[2110,1140],[980,2210],[580,1200],[1940,890],null,null,null,null,null,null,null],
+  [null,null,null,null,[380,300],[610,500],[260,240],[80,500],[220,1630],[530,1350],[1670,330],[4390,330],[8240,720],[4880,440],[1040,250],[3950,1340],[11540,2870],[8230,1640],[1830,260],[3510,190],[7570,430],[4020,500],[640,660],[700,560],[4750,1860],[8950,3260],null,null,null,null,null,null],
+  [[100,40],null,null,[820,300],[160,80],[110,80],[50,70],[80,360],[500,1210],[1020,1000],[710,210],[970,80],[2080,180],[1260,110],[260,40],[890,160],[3280,460],[3760,500],[1570,260],[2120,150],[4340,240],[2280,140],[310,60],[430,160],[3780,1050],[9700,1910],null,null,null,null,null,null],
+  [[180,60],[1580,490],[3760,1040],[2230,550],[340,80],[40,10],[50,10],[190,70],[1570,230],[3770,210],[2200,60],[370,10],[150,10],[90,10],[40,0],[280,30],[2130,250],[4320,700],[2230,580],[750,200],[1110,190],[640,110],[110,20],[160,20],[2100,160],[8080,330],[7840,180],null,null,null,null,null],
+  [null,[1870,320],[5420,830],[3840,540],[680,90],[190,20],[540,40],[610,40],[1650,30],[3800,50],[2230,20],[330,0],[30,0],[20,0],[20,0],[120,20],[970,140],[2360,460],[2280,490],[2130,500],[3390,960],null,null,null,[640,10],null,null,null,null,null,null,null],
+  [null,[1090,140],[3320,410],[2450,310],[500,140],[700,140],[2340,200],[2030,150],[850,40],[1420,30],[1370,40],[430,20],[50,0],[20,0],[10,20],[20,50],[280,190],[2130,360],[5650,500],[5460,790],[5530,1490],null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,[1060,330],[640,300],[310,740],[880,850],[2490,390],[2110,170],[1030,60],[4290,180],[7330,310],[3020,130],[320,10],[30,0],[0,20],[20,150],[240,630],[2070,790],[5730,560],[4470,450],[2410,570],null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,[2400,1220],[1020,790],[470,1530],[580,1660],[720,480],[580,80],[1330,90],[8770,400],[15270,670],[6650,340],[930,80],[80,10],[10,20],[20,140],[110,580],[570,650],[1440,250],null,null,null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,[2590,1320],[1040,670],[280,780],[220,820],[100,240],[120,170],[820,520],[4620,610],[9260,690],[8310,1020],[3960,630],[620,100],[40,10],[10,50],[20,140],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,[30,110],[30,70],[230,530],[850,1810],[1550,1570],[6040,1170],[15130,2520],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[3500,820],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null],
+  [null,null,null,null,null,null,null,null,null,null,[570,140],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null]
+ ],
+ "optimum": {
+  "misplaced": 116430,
+  "assignment": [
+  "..............................AA",
+  "............................AAA.",
+  "..........................AAAA..",
+  "......................AAAAAA....",
+  "..........AAAAA....AAAAAAAA.....",
+  "..........AAAAAAAAAAAAAAA.......",
+  "..........AAAABBBABBAAACA.......",
+  ".....AA...AAAABBBBBBBBCCA.......",
+  "....AAADDDAAAAABBBABBBCBAA......",
+  "A..AADDDDAABBBBBBAAAABBBBA......",
+  "AAAAADAAAAAABBABBABBBBBBAAA.....",
+  ".AAADDAAAAABBAABBABBB...A.......",
+  ".AAADAAAAABBBAABAABBB...........",
+  "..AADAAAABBABAAAABBBB...........",
+  "..AADDAAABBAAAAABBB.............",
+  "..AAAAAAAAAAAAABB...............",
+  ".....AAAAAAA....................",
+  "..........A.....................",
+  "..........A....................."
+ ]
+ }
+}
